@@ -1,0 +1,29 @@
+body {
+	margin:0;
+	padding:0;
+	border:0;
+}
+
+.player-card {
+	box-sizing: border-box;
+	width: 50%;
+	margin: 0;
+	padding: 50px;
+	float: left;
+	border:0;
+}
+.player-card#player1 {
+	background: red;
+	color: white;
+}
+.player-card#player2 {
+	background: blue;
+	color: white;
+}
+#versus {
+	position: absolute;
+	left:45%;
+	top: 100px;
+	text-align: center;
+	color: white;
+}
