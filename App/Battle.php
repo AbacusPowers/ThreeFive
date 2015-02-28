@@ -9,6 +9,7 @@ namespace App;
 class Battle{
 
 	public function battler($attacker, $defender) {
+		global $handler;
 		// echo '<h1>' . $attacker->name . '</h1>';
 
 		// echo '<ul>';
@@ -25,16 +26,22 @@ class Battle{
 
 		$roll = $attacker->attackroll();
 
-		echo $attacker->name.' rolled a ' . $roll . ' ';
 		if ($roll >= $defender->armor) {
-			echo '...and ' . $defender->name . '\'s armor was too weak.<br>';
-			echo $attacker->name . ' hits!<br>';
+			echo '<h4 class="battle-results">' . $attacker->name . ' hits!</h4>';
+			echo '<p class="battle-summary">' . $attacker->name .' rolled a ' . $roll . ' ';
+			echo '...and ' . $defender->name . '\'s armor was too weak.</p>';
 
 			$damage = $attacker->damageroll();
+			echo '<p class="battle-summary">' . $defender->name . ' takes ' . $damage . ' points of damage</p>';
 
-			echo $defender->name . ' takes ' . $damage . ' points of damage';
+			$newhp = $defender->currenthp - $damage;
+			$update = $handler->prepare('UPDATE adventurers SET currenthp = ? WHERE id = ?');
+			$update->execute(array($newhp, $defender->id));
+			echo '<p>' . $defender->name . '\'s health is now ' . $newhp . '</p>';
 		} else {
-			echo '...and ' . $defender->name . '\'s armor was strong enough to withstand the blow.<br>';
+			echo '<h4 class="battle-results">' . $attacker->name . ' misses!</h4>';
+			echo '<p class="battle-summary">' . $attacker->name .' rolled a ' . $roll . ' ';
+			echo '...and ' . $defender->name . '\'s armor was strong enough to withstand the blow.</p>';
 			echo $attacker->name . ' misses!';
 		}
 	}

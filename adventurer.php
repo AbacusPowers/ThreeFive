@@ -1,5 +1,5 @@
 <?php
-require 'autoload.php';
+require 'includes/autoload.php';
 include_once('includes/db.php');
 
 $query = new App\TFQuery();
@@ -12,16 +12,15 @@ if ( isset( $_GET['id'] ) ) {
 	exit();
 }
 
-$adventurer = new App\Adventurer($data['name'], $data['maxhp'], $data['currenthp'], $data['baseattack'], $data['damage'], $data['armor']);
+$adventurer = new App\Adventurer($data['id'], $data['name'], $data['maxhp'], $data['currenthp'], $data['baseattack'], $data['damage'], $data['armor']);
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-<h1><?php echo $data['name']; ?></h1>
+<?php
+$page_title = $data['name'];
+include_once('header.php'); ?>
+
 <?php $adventurer->list_stats(); ?>
+<a href="index.php">&larr; Home</a>
+</div>
 </body>
 </html>

@@ -15,7 +15,7 @@ namespace App;
 //use \PDO;
 
 class Adventurer {
-	public $ID;
+	public $id;
 	public $name;
 	public $maxhp;
 	public $currenthp;
@@ -26,7 +26,9 @@ class Adventurer {
 	public $armor;
 	public $queryargs;
 
-	public function __construct($name = '', $maxhp = NULL, $currenthp = NULL, $baseattack = NULL, $damage = NULL, $armor = NULL) {
+	public function __construct($id = NULL, $name = '', $maxhp = NULL, $currenthp = NULL, $baseattack = NULL, $damage = NULL, $armor = NULL) {
+		//set id
+		if (! empty($id)) {$this->id = $id;}
 		//set name
 		if (! empty($name)) {$this->name = $name;}
 		//set maxhp
@@ -60,10 +62,14 @@ class Adventurer {
 	 * lists Character's vital statistics
 	 */
 	public function list_stats(){
-		//echo '<h1>' . $this->name . '</h1>';
+		$query = new TFQuery();
+		$target = $query->fetch_data($this->id, 'adventurers');
+		$currenthp = $target['currenthp'];
+		echo '<h1>' . $this->name . '</h1>';
 		echo '<ul>';
 		echo '<li>Baseattack: ' . $this->baseattack . '</li>';
 		echo '<li>Max HP: ' . $this->maxhp . '</li>';
+		echo '<li>Current HP: ' . $currenthp . '</li>';
 		echo '<li>Armor: ' . $this->armor . '</li>';
 		echo '<li>Damage: ' . $this->damagedicequant . 'd' . $this->damagedicetype . '</li>';
 		echo '</ul>';
